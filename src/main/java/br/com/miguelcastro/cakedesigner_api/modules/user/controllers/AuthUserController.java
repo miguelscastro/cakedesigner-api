@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.AuthUserRequestDTO;
-import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.RegisterUserRequestDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.CreateUserRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.user.useCases.AuthUserUseCase;
 import br.com.miguelcastro.cakedesigner_api.modules.user.useCases.CreateUserUseCase;
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class AuthUserController {
     private AuthUserUseCase authUserUseCase;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Object> create(@Valid @RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateUserRequestDTO registerUserRequestDTO) {
         try {
             var result = this.createUserUseCase.execute(registerUserRequestDTO);
             return ResponseEntity.ok().body(result);

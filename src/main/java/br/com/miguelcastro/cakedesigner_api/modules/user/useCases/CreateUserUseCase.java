@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import br.com.miguelcastro.cakedesigner_api.exceptions.FoundException;
 import br.com.miguelcastro.cakedesigner_api.modules.user.UserEntity;
 import br.com.miguelcastro.cakedesigner_api.modules.user.UserRepository;
-import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.RegisterUserRequestDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.CreateUserRequestDTO;
 
 @Service
 public class CreateUserUseCase {
@@ -18,7 +18,7 @@ public class CreateUserUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserEntity execute(RegisterUserRequestDTO dto) {
+    public UserEntity execute(CreateUserRequestDTO dto) {
         this.userRepository.findByEmail(dto.getEmail()).ifPresent(user -> {
             throw new FoundException("Failed to create new user");
         });
