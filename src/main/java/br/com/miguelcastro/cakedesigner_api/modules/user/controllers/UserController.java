@@ -14,14 +14,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private ViewUserUseCase viewUserUseCase;
 
-    @PreAuthorize("hasRole('CANDIDATE')")
-    @GetMapping("/me")
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile")
     public ResponseEntity<Object> profile(HttpServletRequest request) {
         var userId = request.getAttribute("user_id");
 
