@@ -23,4 +23,6 @@ public class CreateUserRequestDTO {
     @Pattern(regexp = ".*\\d.*", message = "Password must contain at least one number")
     @Pattern(regexp = ".*[^A-Za-z0-9].*", message = "Password must contain at least one special character")
     private String password;
+
+    private String profileImage;
 }

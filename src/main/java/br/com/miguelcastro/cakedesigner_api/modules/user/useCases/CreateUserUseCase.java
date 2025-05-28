@@ -29,6 +29,7 @@ public class CreateUserUseCase {
                 .name(dto.getName())
                 .email(dto.getEmail())
                 .password(dto.getPassword())
+                .profileImage(dto.getProfileImage())
                 .build();
 
         return this.userRepository.save(user);
