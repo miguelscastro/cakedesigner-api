@@ -19,6 +19,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import br.com.miguelcastro.cakedesigner_api.modules.user.UserRepository;
 import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.AuthUserRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.AuthUserResponseDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.TokenDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.user.dtos.ViewUserResponseDTO;
 
 @Service
 public class AuthUserUseCase {
@@ -55,11 +57,24 @@ public class AuthUserUseCase {
                 .withClaim("roles", Arrays.asList(user.getRole().name()))
                 .withExpiresAt(expiresIn)
                 .sign(algorithm);
-
         var formattedExpireDate = LocalDateTime.ofInstant(expiresIn, ZoneId.systemDefault());
-        var authUserResponse = AuthUserResponseDTO.builder()
-                .access_token(token)
+
+        var userData = ViewUserResponseDTO
+                .builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .profileImage(user.getProfileImage())
+                .id(user.getId())
+                .build();
+
+        var tokenData = TokenDTO.builder()
+                .token(token)
                 .expires_in(formattedExpireDate)
+                .build();
+
+        var authUserResponse = AuthUserResponseDTO.builder()
+                .access_token(tokenData)
+                .user(userData)
                 .build();
 
         return authUserResponse;
