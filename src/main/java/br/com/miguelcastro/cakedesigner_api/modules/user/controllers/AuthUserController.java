@@ -24,9 +24,9 @@ public class AuthUserController {
     private AuthUserUseCase authUserUseCase;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Object> create(@Valid @RequestBody CreateUserRequestDTO registerUserRequestDTO) {
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateUserRequestDTO createUserRequestDTO) {
         try {
-            var result = this.createUserUseCase.execute(registerUserRequestDTO);
+            var result = this.createUserUseCase.execute(createUserRequestDTO);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
