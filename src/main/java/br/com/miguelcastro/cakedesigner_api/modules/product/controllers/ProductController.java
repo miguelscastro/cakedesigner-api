@@ -27,7 +27,7 @@ public class ProductController {
     @Autowired
     ProductRepository productRepository;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody CreateProductRequestDTO createProductRequestDTO) {
         try {
             var result = this.createProductUseCase.execute(createProductRequestDTO);
@@ -37,7 +37,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> list() {
         List<ProductEntity> products = productRepository.findAll();
 

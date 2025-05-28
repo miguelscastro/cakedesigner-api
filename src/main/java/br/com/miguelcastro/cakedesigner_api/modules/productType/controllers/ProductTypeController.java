@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.miguelcastro.cakedesigner_api.modules.productType.ProductTypeEntity;
+import br.com.miguelcastro.cakedesigner_api.modules.productType.dtos.CreateProductTypeRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.productType.useCases.CreateProductTypeUseCase;
 import jakarta.validation.Valid;
 
@@ -18,10 +18,10 @@ public class ProductTypeController {
     @Autowired
     CreateProductTypeUseCase createProductTypeUseCase;
 
-    @PostMapping("/")
-    public ResponseEntity<Object> create(@Valid @RequestBody ProductTypeEntity productTypeEntity) {
+    @PostMapping
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateProductTypeRequestDTO createProductTypeRequestDTO) {
         try {
-            var result = this.createProductTypeUseCase.execute(productTypeEntity);
+            var result = this.createProductTypeUseCase.execute(createProductTypeRequestDTO);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
