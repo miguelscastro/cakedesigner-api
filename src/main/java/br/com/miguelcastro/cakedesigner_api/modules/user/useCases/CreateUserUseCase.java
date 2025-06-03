@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.miguelcastro.cakedesigner_api.enums.UserRole;
 import br.com.miguelcastro.cakedesigner_api.exceptions.FoundException;
 import br.com.miguelcastro.cakedesigner_api.modules.user.UserEntity;
 import br.com.miguelcastro.cakedesigner_api.modules.user.UserRepository;
@@ -30,6 +31,7 @@ public class CreateUserUseCase {
                 .email(dto.getEmail())
                 .password(dto.getPassword())
                 .profileImage(dto.getProfileImage())
+                .role(dto.getRole() != null ? dto.getRole() : UserRole.USER)
                 .build();
 
         return this.userRepository.save(user);

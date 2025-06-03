@@ -16,4 +16,5 @@ public class ViewUserResponseDTO {
     private String email;
     private String profileImage;
     private UUID id;
+    private String role;
 }
