@@ -1,5 +1,6 @@
 package br.com.miguelcastro.cakedesigner_api.modules.user.dtos;
 
+import br.com.miguelcastro.cakedesigner_api.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -25,4 +26,6 @@ public class CreateUserRequestDTO {
     private String password;
 
     private String profileImage;
+
+    private UserRole role;
 }

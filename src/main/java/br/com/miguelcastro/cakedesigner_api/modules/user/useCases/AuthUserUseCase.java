@@ -65,6 +65,7 @@ public class AuthUserUseCase {
                 .email(user.getEmail())
                 .profileImage(user.getProfileImage())
                 .id(user.getId())
+                .role(user.getRole().name())
                 .build();
 
         var tokenData = TokenDTO.builder()
