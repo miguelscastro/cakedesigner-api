@@ -12,4 +12,5 @@ This is the back-end API for the CakeDesigner Virtual Store, built with **Spring
 
 ### Front-end
 
-- *Currently under development.*
+*(Currently under development, all authenticated paths won't be working).*
+- https://cakedesigner.vercel.app/ 
