@@ -27,6 +27,7 @@ public class ViewUserUseCase {
                 .email(user.getEmail())
                 .profileImage(user.getProfileImage())
                 .id(user.getId())
+                .role(user.getRole().name())
                 .build();
 
         return userDTO;
