@@ -1,5 +1,7 @@
 package br.com.miguelcastro.cakedesigner_api.modules.user.useCases;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,9 @@ public class UpdateUserUseCase {
     @Autowired
     private UserRepository userRepository;
 
-    public UserEntity execute(UpdateUserInfoRequestDTO dto) {
-        UserEntity user = userRepository.findById(dto.id())
-                .orElseThrow(() -> new NotFoundException("User not found with id: " + dto.id()));
+    public UserEntity execute(UUID userId, UpdateUserInfoRequestDTO dto) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found with id: " + userId));
 
         user.setName(dto.name());
 

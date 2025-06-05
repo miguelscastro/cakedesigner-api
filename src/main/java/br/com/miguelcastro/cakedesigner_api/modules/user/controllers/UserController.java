@@ -43,9 +43,12 @@ public class UserController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/profile/my-data/edit")
-    public ResponseEntity<Object> update(@Valid @RequestBody UpdateUserInfoRequestDTO updateUserInfoRequestDTO) {
+    public ResponseEntity<Object> update(HttpServletRequest request,
+            @Valid @RequestBody UpdateUserInfoRequestDTO updateUserInfoRequestDTO) {
+        var userId = request.getAttribute("user_id");
+
         try {
-            var user = this.updateUserUseCase.execute(updateUserInfoRequestDTO);
+            var user = this.updateUserUseCase.execute(UUID.fromString(userId.toString()), updateUserInfoRequestDTO);
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
