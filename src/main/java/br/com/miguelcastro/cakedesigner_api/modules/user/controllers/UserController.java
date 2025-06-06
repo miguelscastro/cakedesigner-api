@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping("/profile/my-data/edit")
+    @PostMapping("/profile/my-data/personal-data")
     public ResponseEntity<Object> update(HttpServletRequest request,
             @Valid @RequestBody UpdateUserInfoRequestDTO updateUserInfoRequestDTO) {
         var userId = request.getAttribute("user_id");
