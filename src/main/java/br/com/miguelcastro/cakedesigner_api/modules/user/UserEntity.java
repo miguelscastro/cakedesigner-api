@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import br.com.miguelcastro.cakedesigner_api.enums.UserRole;
 import jakarta.persistence.Column;
@@ -17,6 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,16 +34,22 @@ public class UserEntity {
     @Column(name = "cd_user", updatable = false, nullable = false)
     private UUID id;
 
+    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     @Column(name = "nm_user", nullable = false)
     private String name;
 
-    @NotBlank(message = "O e-mail é obrigatório")
-    @Email(message = "O campo [email] deve conter um e-mail válido")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email")
+    @Pattern(regexp = "^[\\w.-]+@(?:gmail\\.com|hotmail\\.com|outlook\\.com|yahoo\\.com\\.br|yahoo\\.com|icloud\\.com|live\\.com)$", message = "Email domain is not allowed")
     @Column(name = "ds_email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "A senha é obrigatória")
-    @Length(min = 10, max = 100)
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, max = 100, message = "Password must have at least 8 characters")
+    @Pattern(regexp = ".*[A-Z].*", message = "Password must contain at least one uppercase letter")
+    @Pattern(regexp = ".*[a-z].*", message = "Password must contain at least one lowercase letter")
+    @Pattern(regexp = ".*\\d.*", message = "Password must contain at least one number")
+    @Pattern(regexp = ".*[^A-Za-z0-9].*", message = "Password must contain at least one special character")
     @Column(name = "ds_password", nullable = false)
     private String password;
 

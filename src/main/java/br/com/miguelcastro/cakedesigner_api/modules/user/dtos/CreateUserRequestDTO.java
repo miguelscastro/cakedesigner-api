@@ -14,7 +14,8 @@ public class CreateUserRequestDTO {
     private String name;
 
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email")
+    @Email(message = "Invalid email format")
+    @Pattern(regexp = "^[\\w.-]+@(?:gmail\\.com|hotmail\\.com|outlook\\.com|yahoo\\.com\\.br|yahoo\\.com|icloud\\.com|live\\.com)$", message = "Email domain is not allowed")
     private String email;
 
     @NotBlank(message = "Password is required")
