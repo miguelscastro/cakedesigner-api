@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +30,10 @@ public class ProductTypeEntity {
     private String name;
 
     @CreationTimestamp
-    @Column(name = "dt_creation")
+    @Column(name = "dt_creation", updatable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
+    @Column(name = "dt_update")
+    private LocalDateTime updatedAt;
 }

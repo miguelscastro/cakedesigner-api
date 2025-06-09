@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.miguelcastro.cakedesigner_api.security.filters.OrderFilter;
 import br.com.miguelcastro.cakedesigner_api.security.filters.UserFilter;
 
 @Configuration
@@ -24,6 +25,9 @@ public class SecurityConfig {
 
     @Autowired
     private UserFilter userFilter;
+
+    @Autowired
+    private OrderFilter orderFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -34,7 +38,8 @@ public class SecurityConfig {
                     auth.requestMatchers("/manage/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .addFilterBefore(userFilter, BasicAuthenticationFilter.class).build();
+                .addFilterBefore(userFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(orderFilter, BasicAuthenticationFilter.class).build();
     }
 
     @Bean
