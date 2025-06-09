@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,9 @@ public class ProductTypeEntity {
     @Column(name = "cd_product_type")
     private UUID id;
 
-    @Column(name = "nm_product_type")
+    @NotBlank(message = "Type name is required")
+    @Size(max = 100, message = "Type name cannot exceed 100 characters")
+    @Column(name = "nm_product_type", nullable = false, length = 100)
     private String name;
 
     @CreationTimestamp

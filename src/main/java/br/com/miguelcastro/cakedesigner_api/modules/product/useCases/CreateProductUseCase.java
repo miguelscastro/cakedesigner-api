@@ -24,7 +24,7 @@ public class CreateProductUseCase {
             throw new FoundException(("Product already exists"));
         });
 
-        var productTypeInfo = this.productTypeRepository.findByName(dto.productTypeName())
+        var productType = this.productTypeRepository.findByName(dto.productTypeName())
                 .orElseThrow(() -> {
                     throw new FoundException("Type is invalid");
                 });
@@ -32,7 +32,7 @@ public class CreateProductUseCase {
         ProductEntity product = ProductEntity.builder()
                 .name(dto.name())
                 .description(dto.description())
-                .productTypeId(productTypeInfo.getId())
+                .productTypeEntity(productType)
                 .price(dto.price())
                 .image(dto.image())
                 .build();

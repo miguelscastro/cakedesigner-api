@@ -13,6 +13,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,23 +34,29 @@ public class ProductEntity {
     @Column(name = "cd_product")
     private UUID id;
 
-    @Column(name = "nm_product")
+    @NotBlank(message = "Name is required")
+    @Size(max = 100, message = "Name cannot exceed 100 characters")
+    @Column(name = "nm_product", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "ds_product")
+    @NotBlank(message = "Description is required")
+    @Size(max = 255, message = "Description cannot exceed 255 characters")
+    @Column(name = "ds_product", nullable = false, length = 255)
     private String description;
 
-    @ManyToOne()
-    @JoinColumn(name = "cd_product_type", insertable = false, updatable = false)
+    @NotNull(message = "Product type is required")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cd_product_type", nullable = false)
     private ProductTypeEntity productTypeEntity;
 
-    @Column(name = "cd_product_type")
-    private UUID productTypeId;
-
-    @Column(name = "vl_product")
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be greater than 0")
+    @Column(name = "vl_product", nullable = false)
     private Double price;
 
-    @Column(name = "ds_image_path")
+    @NotBlank(message = "Image path is required")
+    @Size(max = 255)
+    @Column(name = "ds_image_path", nullable = false, length = 255)
     private String image;
 
     @CreationTimestamp
