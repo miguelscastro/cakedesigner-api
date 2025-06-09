@@ -1,11 +1,10 @@
-package br.com.miguelcastro.cakedesigner_api.modules.product;
+package br.com.miguelcastro.cakedesigner_api.modules.product.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import br.com.miguelcastro.cakedesigner_api.modules.productType.ProductTypeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

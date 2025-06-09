@@ -1,4 +1,4 @@
-package br.com.miguelcastro.cakedesigner_api.modules.productType.controllers;
+package br.com.miguelcastro.cakedesigner_api.modules.product.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.miguelcastro.cakedesigner_api.modules.productType.dtos.CreateProductTypeRequestDTO;
-import br.com.miguelcastro.cakedesigner_api.modules.productType.useCases.CreateProductTypeUseCase;
+import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.CreateProductTypeRequestDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.product.useCases.CreateProductTypeUseCase;
 import jakarta.validation.Valid;
 
 @RestController

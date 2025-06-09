@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.miguelcastro.cakedesigner_api.modules.product.ProductEntity;
-import br.com.miguelcastro.cakedesigner_api.modules.product.ProductRepository;
 import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.CreateProductRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.ProductResponseDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.product.entities.ProductEntity;
+import br.com.miguelcastro.cakedesigner_api.modules.product.repositories.ProductRepository;
 import br.com.miguelcastro.cakedesigner_api.modules.product.useCases.CreateProductUseCase;
 import jakarta.validation.Valid;
 

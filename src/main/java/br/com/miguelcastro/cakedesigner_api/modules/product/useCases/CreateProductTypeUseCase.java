@@ -1,12 +1,12 @@
-package br.com.miguelcastro.cakedesigner_api.modules.productType.useCases;
+package br.com.miguelcastro.cakedesigner_api.modules.product.useCases;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.miguelcastro.cakedesigner_api.exceptions.FoundException;
-import br.com.miguelcastro.cakedesigner_api.modules.productType.ProductTypeEntity;
-import br.com.miguelcastro.cakedesigner_api.modules.productType.ProductTypeRepository;
-import br.com.miguelcastro.cakedesigner_api.modules.productType.dtos.CreateProductTypeRequestDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.CreateProductTypeRequestDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.product.entities.ProductTypeEntity;
+import br.com.miguelcastro.cakedesigner_api.modules.product.repositories.ProductTypeRepository;
 
 @Service
 public class CreateProductTypeUseCase {

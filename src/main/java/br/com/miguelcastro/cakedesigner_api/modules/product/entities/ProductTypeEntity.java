@@ -1,4 +1,4 @@
-package br.com.miguelcastro.cakedesigner_api.modules.productType;
+package br.com.miguelcastro.cakedesigner_api.modules.product.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

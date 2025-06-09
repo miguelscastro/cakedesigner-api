@@ -3,7 +3,7 @@ package br.com.miguelcastro.cakedesigner_api.modules.product.dtos;
 import java.util.List;
 import java.util.UUID;
 
-import br.com.miguelcastro.cakedesigner_api.modules.product.ProductEntity;
+import br.com.miguelcastro.cakedesigner_api.modules.product.entities.ProductEntity;
 
 public record ProductResponseDTO(
         UUID id,
