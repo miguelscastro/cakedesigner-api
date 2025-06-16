@@ -1,5 +1,6 @@
 package br.com.miguelcastro.cakedesigner_api.modules.order.entities;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -37,8 +38,8 @@ public class OrderProductEntity {
     private ProductEntity product;
 
     @Column(name = "qt_product", nullable = false)
-    private Integer quantity;
+    private BigDecimal quantity;
 
     @Column(name = "vl_product", nullable = false)
-    private Double price;
+    private BigDecimal price;
 }

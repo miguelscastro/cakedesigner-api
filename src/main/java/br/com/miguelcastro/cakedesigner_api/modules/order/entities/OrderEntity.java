@@ -1,5 +1,6 @@
 package br.com.miguelcastro.cakedesigner_api.modules.order.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class OrderEntity {
     private AddressEntity address;
 
     @Column(name = "vl_delivery_fee")
-    private Double deliveryFee;
+    private BigDecimal deliveryFee;
 
     @Builder.Default
     @JsonManagedReference
