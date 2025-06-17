@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     private UpdateUserUseCase updateUserUseCase;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER', 'ADMIN')")
     @GetMapping
     public ResponseEntity<Object> profile(HttpServletRequest request) {
         var userId = request.getAttribute("user_id");
@@ -41,7 +41,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER', 'ADMIN')")
     @PostMapping("/profile")
     public ResponseEntity<Object> update(HttpServletRequest request,
             @Valid @RequestBody UpdateUserInfoRequestDTO updateUserInfoRequestDTO) {

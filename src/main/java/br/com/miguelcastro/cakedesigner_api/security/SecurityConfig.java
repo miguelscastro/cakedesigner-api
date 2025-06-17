@@ -15,19 +15,29 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import br.com.miguelcastro.cakedesigner_api.security.filters.AdminFilter;
+import br.com.miguelcastro.cakedesigner_api.security.filters.AuthFilter;
 import br.com.miguelcastro.cakedesigner_api.security.filters.OrderFilter;
 import br.com.miguelcastro.cakedesigner_api.security.filters.UserFilter;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+    @Autowired
+    private AdminFilter adminFilter;
 
     @Autowired
     private UserFilter userFilter;
 
     @Autowired
     private OrderFilter orderFilter;
+
+    @Autowired
+    private AuthFilter authFilter;
+
+    SecurityConfig(AdminFilter adminFilter) {
+        this.adminFilter = adminFilter;
+    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,7 +48,9 @@ public class SecurityConfig {
                     auth.requestMatchers("/manage/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
+                .addFilterBefore(authFilter, BasicAuthenticationFilter.class)
                 .addFilterBefore(userFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(adminFilter, BasicAuthenticationFilter.class)
                 .addFilterBefore(orderFilter, BasicAuthenticationFilter.class).build();
     }
 
