@@ -10,12 +10,12 @@ import br.com.miguelcastro.cakedesigner_api.modules.order.entities.OrderEntity;
 import br.com.miguelcastro.cakedesigner_api.modules.order.repositories.OrderRepository;
 
 @Service
-public class ViewOrdersUseCase {
+public class ViewAllOrdersUseCase {
+  @Autowired
+  private OrderRepository orderRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+  public List<OrderEntity> execute(UUID userId) {
 
-    public List<OrderEntity> execute(UUID userId) {
-        return orderRepository.findAllByUserId(userId);
-    }
+    return orderRepository.findAll();
+  }
 }

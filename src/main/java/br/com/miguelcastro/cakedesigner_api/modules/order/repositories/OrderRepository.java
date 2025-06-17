@@ -9,5 +9,4 @@ import br.com.miguelcastro.cakedesigner_api.modules.order.entities.OrderEntity;
 
 public interface OrderRepository extends JpaRepository<OrderEntity, UUID> {
     List<OrderEntity> findAllByUserId(UUID userId);
-
 }

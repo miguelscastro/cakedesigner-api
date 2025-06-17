@@ -16,6 +16,7 @@ import br.com.miguelcastro.cakedesigner_api.modules.order.dtos.CreateOrderReques
 import br.com.miguelcastro.cakedesigner_api.modules.order.dtos.ViewOrdersResponseDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.order.entities.OrderEntity;
 import br.com.miguelcastro.cakedesigner_api.modules.order.useCases.CreateOrderUseCase;
+import br.com.miguelcastro.cakedesigner_api.modules.order.useCases.ViewAllOrdersUseCase;
 import br.com.miguelcastro.cakedesigner_api.modules.order.useCases.ViewOrdersUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -29,6 +30,13 @@ public class OrderController {
 
     @Autowired
     private ViewOrdersUseCase viewOrdersUseCase;
+
+    @Autowired
+    private ViewAllOrdersUseCase viewAllOrdersUseCase;
+
+    OrderController(ViewAllOrdersUseCase viewAllOrdersUseCase) {
+        this.viewAllOrdersUseCase = viewAllOrdersUseCase;
+    }
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/user")
@@ -46,11 +54,27 @@ public class OrderController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
-    public ResponseEntity<Object> orders(HttpServletRequest request) {
+    public ResponseEntity<Object> userOrders(HttpServletRequest request) {
         var userId = request.getAttribute("user_id");
 
         try {
             List<OrderEntity> orders = this.viewOrdersUseCase.execute(UUID.fromString(userId.toString()));
+
+            List<ViewOrdersResponseDTO> dtoList = orders.stream().map(ViewOrdersResponseDTO::fromEntity).toList();
+
+            return ResponseEntity.ok(dtoList);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping
+    public ResponseEntity<Object> allOrders(HttpServletRequest request) {
+        var userId = request.getAttribute("user_id");
+
+        try {
+            List<OrderEntity> orders = this.viewAllOrdersUseCase.execute(UUID.fromString(userId.toString()));
 
             List<ViewOrdersResponseDTO> dtoList = orders.stream().map(ViewOrdersResponseDTO::fromEntity).toList();
 
