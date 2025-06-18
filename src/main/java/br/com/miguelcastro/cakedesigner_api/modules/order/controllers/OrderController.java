@@ -34,15 +34,11 @@ public class OrderController {
     @Autowired
     private ViewAllOrdersUseCase viewAllOrdersUseCase;
 
-    OrderController(ViewAllOrdersUseCase viewAllOrdersUseCase) {
-        this.viewAllOrdersUseCase = viewAllOrdersUseCase;
-    }
-
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/user")
     public ResponseEntity<Object> create(HttpServletRequest request,
             @Valid @RequestBody CreateOrderRequestDTO createOrderRequestDTO) {
-        var userId = request.getAttribute("user_id");
+        var userId = request.getAttribute("auth_id");
 
         try {
             var order = this.createOrderUseCase.execute(UUID.fromString(userId.toString()), createOrderRequestDTO);
@@ -55,7 +51,7 @@ public class OrderController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public ResponseEntity<Object> userOrders(HttpServletRequest request) {
-        var userId = request.getAttribute("user_id");
+        var userId = request.getAttribute("auth_id");
 
         try {
             List<OrderEntity> orders = this.viewOrdersUseCase.execute(UUID.fromString(userId.toString()));
@@ -71,7 +67,7 @@ public class OrderController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Object> allOrders(HttpServletRequest request) {
-        var userId = request.getAttribute("user_id");
+        var userId = request.getAttribute("auth_id");
 
         try {
             List<OrderEntity> orders = this.viewAllOrdersUseCase.execute(UUID.fromString(userId.toString()));

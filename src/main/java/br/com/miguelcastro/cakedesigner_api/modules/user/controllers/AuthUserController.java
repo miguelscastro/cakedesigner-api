@@ -37,7 +37,7 @@ public class AuthUserController {
             if (createUserRequestDTO.getRole() != null && createUserRequestDTO.getRole().name() == "ADMIN") {
 
                 if (authIdAttribute == null) {
-                    throw new UnauthorizedException("Only users can create new users 0");
+                    throw new UnauthorizedException("Only admins can create new admins");
                 }
 
                 authId = UUID.fromString(authIdAttribute.toString());

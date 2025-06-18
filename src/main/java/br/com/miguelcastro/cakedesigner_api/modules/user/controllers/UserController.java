@@ -37,7 +37,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     public ResponseEntity<Object> profile(HttpServletRequest request) {
-        var userId = request.getAttribute("user_id");
+        var userId = request.getAttribute("auth_id");
 
         try {
             var profile = this.viewUserUseCase.execute(UUID.fromString(userId.toString()));
@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping("/profile")
     public ResponseEntity<Object> update(HttpServletRequest request,
             @Valid @RequestBody UpdateUserInfoRequestDTO updateUserInfoRequestDTO) {
-        var userId = request.getAttribute("user_id");
+        var userId = request.getAttribute("auth_id");
 
         try {
             var user = this.updateUserUseCase.execute(UUID.fromString(userId.toString()), updateUserInfoRequestDTO);
@@ -65,7 +65,7 @@ public class UserController {
     @DeleteMapping("/profile/delete-account")
     public ResponseEntity<Object> user(HttpServletRequest request,
             @Valid @RequestBody DeleteUserRequestDTO deleteUserRequestDTO) {
-        var userId = request.getAttribute("user_id");
+        var userId = request.getAttribute("auth_id");
 
         try {
             var user = this.deleteUserUseCase.execute(UUID.fromString(userId.toString()), deleteUserRequestDTO);

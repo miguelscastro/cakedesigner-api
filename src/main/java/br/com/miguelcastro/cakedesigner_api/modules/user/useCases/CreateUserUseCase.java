@@ -41,12 +41,11 @@ public class CreateUserUseCase {
             throw new FoundException("Failed to create new user");
         });
         var password = passwordEncoder.encode(dto.getPassword());
-        dto.setPassword(password);
 
         UserEntity newUser = UserEntity.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
-                .password(dto.getPassword())
+                .password(password)
                 .profileImage(dto.getProfileImage())
                 .role(dto.getRole() != null ? dto.getRole() : UserRole.USER)
                 .build();
