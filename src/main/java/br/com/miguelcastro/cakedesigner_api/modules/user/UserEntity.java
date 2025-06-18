@@ -1,12 +1,17 @@
 package br.com.miguelcastro.cakedesigner_api.modules.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.miguelcastro.cakedesigner_api.enums.UserRole;
+import br.com.miguelcastro.cakedesigner_api.modules.order.entities.OrderEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +19,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -60,6 +66,10 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "ds_role", nullable = false)
     private UserRole role = UserRole.USER;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<OrderEntity> orders;
 
     @CreationTimestamp
     @Column(name = "dt_creation", updatable = false)

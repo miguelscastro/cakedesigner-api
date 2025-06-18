@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.miguelcastro.cakedesigner_api.modules.user.UserEntity;
@@ -39,6 +40,7 @@ public class OrderEntity {
     private UUID id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "cd_user", nullable = false)
     private UserEntity user;
 
