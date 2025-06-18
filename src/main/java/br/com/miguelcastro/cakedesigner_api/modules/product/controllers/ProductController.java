@@ -1,36 +1,46 @@
 package br.com.miguelcastro.cakedesigner_api.modules.product.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.CreateProductRequestDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.order.dtos.CreateNewProductRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.ProductResponseDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.entities.ProductEntity;
 import br.com.miguelcastro.cakedesigner_api.modules.product.repositories.ProductRepository;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import br.com.miguelcastro.cakedesigner_api.modules.product.useCases.CreateProductUseCase;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/manage/product")
 public class ProductController {
 
     @Autowired
-    CreateProductUseCase createProductUseCase;
+    private CreateProductUseCase createProductUseCase;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
 
-    @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody CreateProductRequestDTO createProductRequestDTO) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> create(
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("productTypeId") UUID productTypeId,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
         try {
-            var result = this.createProductUseCase.execute(createProductRequestDTO);
+            CreateNewProductRequestDTO dto = CreateNewProductRequestDTO.builder()
+                    .name(name)
+                    .description(description)
+                    .productTypeId(productTypeId.toString())
+                    .image(image)
+                    .build();
+
+            var result = this.createProductUseCase.execute(dto);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
