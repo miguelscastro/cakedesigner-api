@@ -16,6 +16,7 @@ public class CreateNewProductRequestDTO {
   private String name;
   private String description;
   private String productTypeId;
+  private Double price;
   private MultipartFile image;
 
 }

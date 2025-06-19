@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,26 +29,32 @@ public class CreateProductUseCase {
 
     public ProductEntity execute(CreateNewProductRequestDTO dto) {
 
-        this.productRepository.findByName(dto.getName()).ifPresent(p -> {
-            throw new FoundException("Product already exists");
-        });
+        try {
+            this.productRepository.findByName(dto.getName()).ifPresent(p -> {
+                throw new FoundException("Product already exists");
+            });
 
-        var productType = this.productTypeRepository.findById(UUID.fromString(dto.getProductTypeId()))
-                .orElseThrow(() -> new FoundException("Type is invalid"));
+            var productType = this.productTypeRepository.findById(UUID.fromString(dto.getProductTypeId()))
+                    .orElseThrow(() -> new FoundException("Type is invalid"));
 
-        String imagePath = null;
-        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
-            imagePath = saveImageAndGetPath(dto.getImage());
+            String imagePath = null;
+            if (dto.getImage() != null && !dto.getImage().isEmpty()) {
+                imagePath = saveImageAndGetPath(dto.getImage());
+            }
+
+            ProductEntity product = ProductEntity.builder()
+                    .name(dto.getName())
+                    .description(dto.getDescription())
+                    .price(dto.getPrice())
+                    .productTypeEntity(productType)
+                    .image(imagePath)
+                    .build();
+
+            return this.productRepository.save(product);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Falha ao salvar a imagem");
         }
-
-        ProductEntity product = ProductEntity.builder()
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .productTypeEntity(productType)
-                .image(imagePath)
-                .build();
-
-        return this.productRepository.save(product);
     }
 
     private String saveImageAndGetPath(MultipartFile image) {
@@ -68,8 +75,10 @@ public class CreateProductUseCase {
         Path filePath = Paths.get(uploadDir, newFileName);
 
         try {
-            Files.copy(image.getInputStream(), filePath);
-            return uploadDir + "/" + newFileName;
+            Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            String baseUrl = "http://localhost:8080";
+            return baseUrl + "/" + uploadDir.replace("\\", "/") + "/" + newFileName;
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Falha ao salvar a imagem");

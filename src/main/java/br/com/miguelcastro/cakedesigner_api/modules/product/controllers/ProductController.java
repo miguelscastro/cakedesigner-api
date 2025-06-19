@@ -30,12 +30,14 @@ public class ProductController {
     public ResponseEntity<Object> create(
             @RequestParam("name") String name,
             @RequestParam("description") String description,
+            @RequestParam("price") Double price,
             @RequestParam("productTypeId") UUID productTypeId,
             @RequestParam(value = "image", required = false) MultipartFile image) {
         try {
             CreateNewProductRequestDTO dto = CreateNewProductRequestDTO.builder()
                     .name(name)
                     .description(description)
+                    .price(price)
                     .productTypeId(productTypeId.toString())
                     .image(image)
                     .build();
