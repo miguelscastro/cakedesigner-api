@@ -2,6 +2,7 @@ package br.com.miguelcastro.cakedesigner_api.modules.product.controllers;
 
 import br.com.miguelcastro.cakedesigner_api.modules.order.dtos.CreateNewProductRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.ProductResponseDTO;
+import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.UpdateProductRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.entities.ProductEntity;
 import br.com.miguelcastro.cakedesigner_api.modules.product.repositories.ProductRepository;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.miguelcastro.cakedesigner_api.modules.product.useCases.CreateProductUseCase;
+import br.com.miguelcastro.cakedesigner_api.modules.product.useCases.UpdateProductUseCase;
 
 @RestController
 @RequestMapping("/manage/product")
@@ -22,6 +24,9 @@ public class ProductController {
 
     @Autowired
     private CreateProductUseCase createProductUseCase;
+
+    @Autowired
+    private UpdateProductUseCase updateProductUseCase;
 
     @Autowired
     private ProductRepository productRepository;
@@ -59,4 +64,15 @@ public class ProductController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> update(@ModelAttribute UpdateProductRequestDTO dto) {
+        try {
+            var result = this.updateProductUseCase.execute(dto);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
