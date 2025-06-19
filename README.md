@@ -1,6 +1,6 @@
 # 🍰 Cakedesigner API
 
-Back-end API for the CakeDesigner virtual store, built with **Spring Boot** and integrated with a **React** front-end. The API provides secure user authentication, role-based access control, product image storage, and integration with an external API to retrieve address data for delivery.
+Back-end API for the CakeDesigner virtual store (https://github.com/miguelscastro/cakedesigner), built with **Spring Boot** and integrated with a **React** front-end. The API provides secure user authentication, role-based access control, product image storage, and integration with an external API to retrieve address data for delivery.
 
 ## Features
 
@@ -66,7 +66,3 @@ Back-end API for the CakeDesigner virtual store, built with **Spring Boot** and 
 - Product routes for `POST`, `PUT`, and `DELETE` require a valid **admin token**.
 
 - Uploaded product images are saved in a local `uploads/images/` directory, and their complete URL path is stored in the database:
-
-# Cakedesigner Front-end
-
-https://github.com/miguelscastro/cakedesigner
