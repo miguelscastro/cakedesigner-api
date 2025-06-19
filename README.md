@@ -66,3 +66,7 @@ Back-end API for the CakeDesigner virtual store, built with **Spring Boot** and 
 - Product routes for `POST`, `PUT`, and `DELETE` require a valid **admin token**.
 
 - Uploaded product images are saved in a local `uploads/images/` directory, and their complete URL path is stored in the database:
+
+# Cakedesigner Front-end
+
+https://github.com/miguelscastro/cakedesigner
