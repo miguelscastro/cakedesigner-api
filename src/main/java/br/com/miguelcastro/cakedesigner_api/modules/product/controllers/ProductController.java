@@ -1,5 +1,6 @@
 package br.com.miguelcastro.cakedesigner_api.modules.product.controllers;
 
+import br.com.miguelcastro.cakedesigner_api.exceptions.NotFoundException;
 import br.com.miguelcastro.cakedesigner_api.modules.order.dtos.CreateNewProductRequestDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.ProductResponseDTO;
 import br.com.miguelcastro.cakedesigner_api.modules.product.dtos.UpdateProductRequestDTO;
@@ -71,6 +72,21 @@ public class ProductController {
             var result = this.updateProductUseCase.execute(dto);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable UUID id) {
+        try {
+            var product = this.productRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Product not found"));
+
+            this.productRepository.delete(product);
+
+            return ResponseEntity.ok().body(product);
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
