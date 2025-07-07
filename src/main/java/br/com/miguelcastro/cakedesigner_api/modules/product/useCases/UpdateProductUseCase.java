@@ -70,7 +70,7 @@ public class UpdateProductUseCase {
 
     try {
       Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-      String baseUrl = "http://localhost:8080";
+      String baseUrl = "https://cakedesigner.onrender.com";
       return baseUrl + "/" + uploadDir.replace("\\", "/") + "/" + filename;
     } catch (IOException e) {
       e.printStackTrace();
